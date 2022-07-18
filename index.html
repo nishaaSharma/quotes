@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="mystyle.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+    <title>Motivational Quotes</title>
+</head>
+
+<body>
+
+    <button onclick="fetch_data()">Fetch Quote</button>
+    <div class="quote-container" id="result"></div>
+
+
+    <script type="text/javascript">
+        function speak(text, voice, rate, pitch, volume) {
+            let speakData = new SpeechSynthesisUtterance("");
+            speakData.volume = volume;
+            speakData.rate = rate;
+            speakData.pitch = pitch;
+            speakData.text = text;
+            speakData.lang = 'en';
+            speakData.voice = voice;
+            speechSynthesis.speak(speakData);
+        }
+
+        function fetch_data() {
+            fetch('https://type.fit/api/quotes')
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    var a = Math.floor(Math.random() * 1643);
+                    var b = data[a].text;
+                    document.getElementById("result").innerHTML = b;
+                    rate = 0.5;
+                    pitch = 1.5;
+                    volume = 0.5;
+                    speak(b, undefined, rate, pitch, volume);
+                });
+        }
+    </script>
+</body>
+
+</html>
